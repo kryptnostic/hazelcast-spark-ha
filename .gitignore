@@ -1,12 +1,19 @@
-*.class
+.gradle/
+.kryptnostic/
+bin/
+build/
+artifacts/
+src/main/webapp/auth/
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+# IDE generated files
+.classpath
+.project
+.idea/
+.settings/
+*.iml
+*.ipr
+*.iws
 
-# Package Files #
-*.jar
-*.war
-*.ear
-
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+# source maps
+*.css.map
+*.js.map
