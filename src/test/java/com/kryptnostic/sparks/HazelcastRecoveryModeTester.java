@@ -20,7 +20,7 @@ import com.hazelcast.core.Message;
 import com.hazelcast.core.MessageListener;
 import com.kryptnostic.sparks.HazelcastRecoveryModeFactory.LeaderElection;
 
-public class ElConductorTester {
+public class HazelcastRecoveryModeTester {
     static final HazelcastInstance hazelcast = Hazelcast.newHazelcastInstance();
     static final ExecutorService   executor  = Executors.newFixedThreadPool( 3 );
 

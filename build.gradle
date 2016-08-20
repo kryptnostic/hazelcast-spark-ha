@@ -1,18 +1,14 @@
 plugins {
-    id "application"
     id "java"
     id "eclipse"
     id "idea"
     id "jacoco"
-    id 'com.github.johnrengelman.shadow' version '1.2.3'
 }
 
 description = "Kryptnostic Spark HA Library"
 group = "com.kryptnostic"
 ext.projectName = "hazelcast-spark-ha"
 
-mainClassName = "com.kryptnostic.sparks.Kindling"
-applicationDefaultJvmArgs = ["-Xmx4G","-Xms4G","-server"]
 ext.sourceCompatibility=JavaVersion.VERSION_1_8
 ext.targetCompatibility=JavaVersion.VERSION_1_8
 
@@ -21,7 +17,6 @@ repositories {
   mavenLocal()
   mavenCentral()
 }
-
 
 ext.cassandra_driver_version='3.0.2'
 ext.snappy_version='1.1.2.1'
@@ -33,6 +28,7 @@ ext.hazelcast_version='3.7'
 ext.mockito_version='1.10.19'
 ext.slf4j_version='1.7.12'
 ext.log4j_version='2.5'
+ext.guava_version='18.0'
 
 configurations {
     provided
@@ -46,10 +42,8 @@ sourceSets {
 
 dependencies {
     provided "org.apache.spark:spark-core_2.10:${spark_version}"
-    provided "org.apache.spark:spark-sql_2.10:${spark_version}"
-    provided "org.apache.spark:spark-mllib_2.10:${spark_version}"
-    provided "org.apache.spark:spark-graphx_2.10:${spark_version}"
-    provided "org.apache.spark:spark-streaming_2.10:${spark_version}"
+
+    compile "com.google.guava:guava:${guava_version}"
 
     compile "com.hazelcast:hazelcast-client:${hazelcast_version}"
 
@@ -58,17 +52,6 @@ dependencies {
     compile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: "${log4j_version}" 
     compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: "${log4j_version}" 
     compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: "${log4j_version}" 
-    compile group: 'org.apache.logging.log4j', name: 'log4j-web', version: "${log4j_version}" 
-
-     /**
-      * Cassandra
-      */
-    compile group: 'com.datastax.cassandra', name: 'cassandra-driver-core', version: "${cassandra_driver_version}"
-    compile group: 'com.datastax.cassandra', name: 'cassandra-driver-extras', version: "${cassandra_driver_version}"
-    compile group: 'com.datastax.cassandra', name: 'cassandra-driver-mapping', version: "${cassandra_driver_version}"
-    compile "org.xerial.snappy:snappy-java:${snappy_version}"
-    compile "net.jpountz.lz4:lz4:${lz4_version}"
-    compile "io.netty:netty-transport-native-epoll:${netty_epoll_version}:${netty_os_arch}"
 
     testCompile 'junit:junit:4.12'
     testCompile "org.mockito:mockito-all:${mockito_version}"
