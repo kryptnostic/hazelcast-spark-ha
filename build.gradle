@@ -5,8 +5,25 @@ plugins {
     id "jacoco"
 }
 
+//Easy semantic version based off describe + tags
+def getVersionName = { ->
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'describe', '--tags', '--dirty', '--long'
+        standardOutput = stdout
+    }
+    def tagVer = stdout.toString().trim()
+    def semVer = (tagVer =~ /v?([\d\.]+)/)[0][1]
+
+    if (tagVer.contains('dev')) {
+        semVer += "-SNAPSHOT"
+    }
+    return semVer
+}
+
 description = "Kryptnostic Spark HA Library"
 group = "com.kryptnostic"
+version = getVersionName()
 ext.projectName = "hazelcast-spark-ha"
 
 ext.sourceCompatibility=JavaVersion.VERSION_1_8
@@ -43,8 +60,9 @@ sourceSets {
 dependencies {
     provided "org.apache.spark:spark-core_2.10:${spark_version}"
 
-    compile "com.google.guava:guava:${guava_version}"
 
+    compile "com.google.guava:guava:${guava_version}"
+    
     compile "com.hazelcast:hazelcast-client:${hazelcast_version}"
 
     compile group: "org.slf4j", name: "slf4j-api", version:"${slf4j_version}"
