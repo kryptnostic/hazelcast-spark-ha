@@ -3,6 +3,7 @@ plugins {
     id "eclipse"
     id "idea"
     id "jacoco"
+    id 'com.github.johnrengelman.shadow' version '1.2.3'
 }
 
 //Easy semantic version based off describe + tags
